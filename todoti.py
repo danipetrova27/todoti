@@ -18,24 +18,21 @@ else:
 worksheet = workbook.active
 if worksheet.title != 'Task Output':
     worksheet.title = 'Task Output'
-    worksheet.append(['Task', 'Duration', 'Client', 'Job'])
-
-# Write the headers to the worksheet
-# worksheet.cell(row=1, column=1, value='Task')
-# worksheet.cell(row=1, column=2, value='Duration')
-# worksheet.cell(row=1, column=3, value='Client')
-# worksheet.cell(row=1, column=4, value='Job')
+    worksheet.append(['Task', 'Task Name', 'Duration', 'Client', 'Job'])
 
 # Define the function to start the stopwatch for a task
-def start_stopwatch(task, duration):
+def start_stopwatch(task, duration, task_name):
     # Create a task_i window
     window = tk.Toplevel(root)
     window.title(task)
     window.geometry('300x300')
     
-    # Add a label for the task name
+    # Add a label for the task 
     task_label = tk.Label(window, text=task, font=('Arial', 18))
     task_label.pack(pady=10)
+    # Add a label for the task name
+    input_label = tk.Label(window, text=task_name.get(), font=('Arial', 12))
+    input_label.pack(pady=5)
 
     # Add an input field for the user to input Job (task description)
     input_label = tk.Label(window, text="Job:", font=('Arial', 12))
@@ -87,7 +84,7 @@ def start_stopwatch(task, duration):
         
         print(f"{task} took {duration_str} in total. Client: {uc_entry.get()}. Job: {ut_entry.get()}")
         # Append the data to the worksheet
-        worksheet.append([task, duration_str, uc_entry.get(), ut_entry.get()])
+        worksheet.append([task, task_name.get(), duration_str, uc_entry.get(), ut_entry.get()])
         workbook.save(output_file)
         window.bind('<Return>', exit_stopwatch)
 
@@ -112,20 +109,34 @@ def start_stopwatch(task, duration):
 
 # Create the main window
 root = tk.Tk()
-root.title('To-Do List')
-root.geometry('300x400')
+root.title('ToDoTi')
+root.geometry('500x400')
 
 # Add a label for the to-do list
 label = tk.Label(root, text='To-Do List', font=('Arial', 18))
 label.pack(pady=10)
-# Define the tasks and their corresponding duration variables
+# Define the tasks and their corresponding duration and input task variables
 task_durations = {'task1': tk.StringVar(), 'task2': tk.StringVar(), 'task3': tk.StringVar(), 'task4': tk.StringVar(), 'task5': tk.StringVar()}
+task_names = {'task1': tk.StringVar(), 'task2': tk.StringVar(), 'task3': tk.StringVar(), 'task4': tk.StringVar(), 'task5': tk.StringVar()}
 
-# Loop through the tasks and add a button for each task
+# Loop through the tasks and add a button and input field for each task
 for task, duration_var in task_durations.items():
-    button = tk.Button(root, text=task, font=('Arial', 14),
-                       command=lambda t=task, d=duration_var: start_stopwatch(t, d))
-    button.pack(pady=5)
+    # Create a frame to hold the task and input field
+    frame = tk.Frame(root)
+    frame.pack(pady=5)
+
+    # Add the task label
+    task_label = tk.Label(frame, text=task, font=('Arial', 14))
+    task_label.pack(side='left')
+
+    # Add the task name field
+    task_name = tk.Entry(frame, textvariable=task_names[task])
+    task_name.pack(side='left', padx=5)
+
+    # Add the button to start the stopwatch
+    button = tk.Button(frame, text='Start', font=('Arial', 12),
+                       command=lambda t=task, d=duration_var, f=task_name: start_stopwatch(t, d, f))
+    button.pack(side='left')
 
 # Start the main event loop
 root.mainloop()
