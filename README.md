@@ -1,9 +1,9 @@
 # todoti
-# short and sweet
+### short and sweet
 This is a small program in python with simple GUI using Python's built-in tkinter module. 
 It displays a To-Do List where the user can make a planning for general tasks. 
 Click on Start for a task to start a stopwatch timer for the task and add Job and Client. At the end an output excel worksheet is created for the work day.
-#################################
+### For extra details
 Todoti is initially made in Python 3.10 (64-bit).
 We use the time module to calculate the elapsed time for each task using a while loop.
 We initialize the start_time variable with the current time using the time.time() function, and then we use a while loop to keep looping until the duration of the task is reached.
