@@ -1,9 +1,9 @@
 # todoti
-### short and sweet
+### Description: short and sweet
 This is a small program in python with simple GUI using Python's built-in tkinter module. 
 It displays a To-Do List where the user can make a planning for general tasks. 
 Click on Start for a task to start a stopwatch timer for the task and add Job and Client. At the end an output excel worksheet is created for the work day.
-### For extra details
+### Description: extra details
 Todoti is initially made in Python 3.10 (64-bit).
 We use the time module to calculate the elapsed time for each task using a while loop.
 We initialize the start_time variable with the current time using the time.time() function, and then we use a while loop to keep looping until the duration of the task is reached.
@@ -18,15 +18,26 @@ The task data, such as task, name, duration, Client and Job input are saved or a
 When todoti is run multiple times a day, the same output file for the day keeps being appended with the new data.
 
 This code creates a GUI with tkinter. The Toplevel class is used to create a new window for each task. 
-  Note that you do not need to install any additional libraries to run this code, as tkinter is included with Python by default.
-
+Note that you do not need to install any additional libraries to run this code, as tkinter is included with Python by default.
   
 To export the print output to an Excel sheet, we use the openpyxl library. You can install it via pip using the command pip install openpyxl.
 Then you can create a new Excel workbook, create a worksheet for the task output data, and write the data to the worksheet every time the stopwatch is stopped.
-Todoti will create an Excel file named task_output_DDMMMYYYY.xlsx (if it doesn't exist) and append a new row to the worksheet for each stopped stopwatch, including the task name, duration, and the data entered by the user.
-  The output file name includes the current date in the format DDMMMYYYY (e.g., task_output_16May2023.xlsx).
-  The code checks if a file with that name exists in the current directory for the current date. If it exists, the existing workbook is loaded. Otherwise, a new workbook is created. 
-  The data will be appended to the existing worksheet within the workbook, preserving the data from previous runs in the same day.
+Todoti will create an Excel file named task_output_DDMMMYYYY.xlsx (if it doesn't exist) and append a new row to the worksheet for each stopped stopwatch, including the task name, duration, and the data entered by the user. The output file name includes the current date in the format DDMMMYYYY (e.g., task_output_16May2023.xlsx).
+The code checks if a file with that name exists in the current directory for the current date. If it exists, the existing workbook is loaded. Otherwise, a new workbook is created. 
+The data will be appended to the existing worksheet within the workbook, preserving the data from previous runs in the same day.
 
-  A dictionary task_inputs holds the StringVar variables for each task's name input field. 
-  Inside the loop, a frame is created to hold the task label, task name field, and start button. The task label and input field are packed side by side within the frame.
+A dictionary task_inputs holds the StringVar variables for each task's name input field. 
+Inside the loop, a frame is created to hold the task label, task name field, and start button. The task label and input field are packed side by side within the frame.
+  
+### Installation and dependencies
+##### 1. os module
+  Used to read and write the output files.
+##### 2. time module
+  Used for the stopwatch functionality.
+##### 3. datetime module
+  Used for creating a single output file per day and naming the output files with the current date.
+##### 4. tkinter module
+  Used for the GUI to create the todoti main to-do list window and the task-specific windows with buttons and fields.
+##### 5. Workbook from the openpyxl library 
+  Used to read and write Excel 2010 files for the output files.
+  
