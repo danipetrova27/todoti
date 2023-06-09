@@ -6,7 +6,7 @@ import customtkinter as ctk
 from openpyxl import Workbook, load_workbook
 #The default theme for custom Tkinter is system defined; themes available are dark-blue, blue and green
 ctk.set_default_color_theme("dark-blue")
-# EXPORT UPDATES DON'T WORK, 
+
 # OTHER FILES NEED TO BE UPDATED
 #Attribute 'config' is not implemented for CTk widgets. For consistency, always use 'configure' instead
 
