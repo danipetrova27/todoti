@@ -1,8 +1,14 @@
 import os
 import time
 import datetime
-import tkinter as tk
+from tkinter import *
+import customtkinter as ctk
 from openpyxl import Workbook, load_workbook
+#The default theme for custom Tkinter is system defined; themes available are dark-blue, blue and green
+ctk.set_default_color_theme("dark-blue")
+# EXPORT UPDATES DON'T WORK, 
+# OTHER FILES NEED TO BE UPDATED
+#Attribute 'config' is not implemented for CTk widgets. For consistency, always use 'configure' instead
 
 # Get the current date
 current_date = datetime.date.today().strftime('%d%b%Y')
@@ -23,31 +29,31 @@ if worksheet.title != 'Task Output':
 # Define the function to start the stopwatch for a task
 def start_stopwatch(task, duration, task_name):
     # Create a task_i window
-    window = tk.Toplevel(root)
+    window = ctk.CTkToplevel(root)
     window.title(task)
     window.geometry('300x300')
     
     # Add a label for the task 
-    task_label = tk.Label(window, text=task, font=('Arial', 18))
+    task_label = ctk.CTkLabel(window, text=task, font=('Arial', 18))
     task_label.pack(pady=10)
     # Add a label for the task name
-    input_label = tk.Label(window, text=task_name.get(), font=('Arial', 12))
+    input_label = ctk.CTkLabel(window, text=task_name.get(), font=('Arial', 12))
     input_label.pack(pady=5)
 
     # Add an input field for the user to input Job (task description)
-    input_label = tk.Label(window, text="Job:", font=('Arial', 12))
+    input_label = ctk.CTkLabel(window, text="Job:", font=('Arial', 12))
     input_label.pack(pady=5)
-    ut_entry = tk.Entry(window)
+    ut_entry = ctk.CTkEntry(window)
     ut_entry.pack(pady=5)
 
     # Add an input field for the user to input Client (name)
-    input_label = tk.Label(window, text="Client:", font=('Arial', 12))
+    input_label = ctk.CTkLabel(window, text="Client:", font=('Arial', 12))
     input_label.pack(pady=5)
-    uc_entry = tk.Entry(window)
+    uc_entry = ctk.CTkEntry(window)
     uc_entry.pack(pady=5)
     
     # Add a label for the stopwatch
-    stopwatch_label = tk.Label(window, text='00:00:00', font=('Arial', 24))
+    stopwatch_label = ctk.CTkLabel(window, text='00:00:00', font=('Arial', 24))
     stopwatch_label.pack()
     
     # Define the function to update the stopwatch label
@@ -57,7 +63,7 @@ def start_stopwatch(task, duration, task_name):
         hours= int(elapsed_time//3600)
         minutes = int((elapsed_time // 60) % 60)
         seconds = int(elapsed_time % 60)
-        stopwatch_label.config(text='{:02d}:{:02d}:{:02d}'.format(hours, minutes, seconds))
+        stopwatch_label.configure(text='{:02d}:{:02d}:{:02d}'.format(hours, minutes, seconds))
         if not final_duration:
             window.after(100, update_stopwatch)
     
@@ -71,15 +77,15 @@ def start_stopwatch(task, duration, task_name):
         
         if hours > 0:
             duration_var.set(f'{hours} hours {minutes} minutes {seconds} seconds')
-            duration_label.config(text=f'{hours} hours {minutes} minutes {seconds} seconds')
+            duration_label.configure(text=f'{hours} hours {minutes} minutes {seconds} seconds')
             duration_str = f"{hours} hours {minutes} minutes {seconds} seconds"
         elif minutes > 0:
             duration_var.set(f'{minutes} minutes {seconds} seconds')
-            duration_label.config(text=f'{minutes} minutes {seconds} seconds')
+            duration_label.configure(text=f'{minutes} minutes {seconds} seconds')
             duration_str = f"{minutes} minutes {seconds} seconds"
         else:
             duration_var.set(f'{seconds} seconds')
-            duration_label.config(text=f'{seconds} seconds')
+            duration_label.configure(text=f'{seconds} seconds')
             duration_str = f"{seconds} seconds"
         
         print(f"{task} took {duration_str} in total. Client: {uc_entry.get()}. Job: {ut_entry.get()}")
@@ -98,7 +104,7 @@ def start_stopwatch(task, duration, task_name):
     update_stopwatch()
 
      # Add a label for the final duration
-    duration_label = tk.Label(window, text='Hit <Return> to STOP and see the elapsed time.')
+    duration_label = ctk.CTkLabel(window, text='Hit <Return> to STOP and see the elapsed time.')
     duration_label.pack(pady=10)
 
     # Bind the <Return> key to stop the stopwatch and display the final duration
@@ -108,33 +114,33 @@ def start_stopwatch(task, duration, task_name):
     window.mainloop()
 
 # Create the main window
-root = tk.Tk()
+root = ctk.CTk()
 root.title('ToDoTi')
 root.geometry('500x400')
 
 # Add a label for the to-do list
-label = tk.Label(root, text='To-Do List', font=('Arial', 18))
+label = ctk.CTkLabel(root, text='To-Do List', font=('Arial', 18))
 label.pack(pady=10)
 # Define the tasks and their corresponding duration and input task variables
-task_durations = {'task1': tk.StringVar(), 'task2': tk.StringVar(), 'task3': tk.StringVar(), 'task4': tk.StringVar(), 'task5': tk.StringVar()}
-task_names = {'task1': tk.StringVar(), 'task2': tk.StringVar(), 'task3': tk.StringVar(), 'task4': tk.StringVar(), 'task5': tk.StringVar()}
+task_durations = {'Task 1': ctk.StringVar(), 'Task 2': ctk.StringVar(), 'Task 3': ctk.StringVar(), 'Task 4': ctk.StringVar(), 'Task 5': ctk.StringVar()}
+task_names = {'Task 1': ctk.StringVar(), 'Task 2': ctk.StringVar(), 'Task 3': ctk.StringVar(), 'Task 4': ctk.StringVar(), Ttask 5': ctk.StringVar()}
 
 # Loop through the tasks and add a button and input field for each task
 for task, duration_var in task_durations.items():
     # Create a frame to hold the task and input field
-    frame = tk.Frame(root)
+    frame = ctk.CTkFrame(root)
     frame.pack(pady=5)
 
     # Add the task label
-    task_label = tk.Label(frame, text=task, font=('Arial', 14))
+    task_label = ctk.CTkLabel(frame, text=task, font=('Arial', 14))
     task_label.pack(side='left')
 
     # Add the task name field
-    task_name = tk.Entry(frame, textvariable=task_names[task])
+    task_name = ctk.CTkEntry(frame, textvariable=task_names[task])
     task_name.pack(side='left', padx=5)
 
     # Add the button to start the stopwatch
-    button = tk.Button(frame, text='Start', font=('Arial', 12),
+    button = ctk.CTkButton(frame, text='Start', font=('Arial', 12),
                        command=lambda t=task, d=duration_var, f=task_name: start_stopwatch(t, d, f))
     button.pack(side='left')
 
